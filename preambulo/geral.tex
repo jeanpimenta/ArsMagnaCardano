@@ -1,0 +1,358 @@
+\RequirePackage[l2tabu,orthodox]{nag} % Old habits die hard
+
+\newskip\Otherbigskipamount   \Otherbigskipamount=15pt plus 5pt minus 5pt
+\newcommand{\Otherbigskip}{\vspace{\Otherbigskipamount}}
+
+\newcommand{\papersizeswitch}[3]{\ifnum\strcmp{\papersize}{#1}=0#2\else#3\fi}
+\papersizeswitch{b5paper}{\def\classfontsize{12pt}}{\def\classfontsize{14pt}}
+
+\documentclass[\classfontsize,\papersize,openany,showtrims,extrafontsizes]{memoir}
+\RequireXeTeX
+
+%\cftpagenumbersoff{chapter} %Para suprimir página dos capítulos no ToC
+
+\showtrimsoff
+\papersizeswitch{b5paper}{
+    % Layouts dos papéis
+    \pagebv
+    \setlrmarginsandblock{26mm}{20mm}{*}
+    \setulmarginsandblock{35mm}{30mm}{*}
+    \setheadfoot{8mm}{10mm}
+    \setlength{\headsep}{7mm}
+    \setlength{\marginparwidth}{18mm}
+    \setlength{\marginparsep}{2mm}
+}{
+    \papersizeswitch{a4paper}{
+        \pageaiv
+        \setlength{\trimtop}{0pt}
+        \setlength{\trimedge}{\stockwidth}
+        \addtolength{\trimedge}{-\paperwidth}
+        \settypeblocksize{634pt}{448.13pt}{*}
+        \setulmargins{4cm}{*}{*}
+        \setlrmargins{*}{*}{0.66}
+        \setmarginnotes{17pt}{51pt}{\onelineskip}
+        \setheadfoot{\onelineskip}{2\onelineskip}
+        \setheaderspaces{*}{2\onelineskip}{*}
+    }{
+    }
+}
+\ifnum\strcmp{\showtrims}{true}=0
+    % Para imprimir B5 em um A4 com marcas de corte (trimmarks)
+    \showtrimson
+    \papersizeswitch{b5paper}{\stockaiv}{\stockaiii}
+    \setlength{\trimtop}{\stockheight}
+    \addtolength{\trimtop}{-\paperheight}
+    \setlength{\trimtop}{0.5\trimtop}
+    \setlength{\trimedge}{\stockwidth}
+    \addtolength{\trimedge}{-\paperwidth}
+    \setlength{\trimedge}{0.5\trimedge}
+    
+    % maior todos se houver trim marks
+    \setmarginnotes{10pt}{95pt}{\onelineskip}
+
+    \trimLmarks
+    
+    % coloca o jobname no canto esquerdo superior das marcas (trim mark)
+    \renewcommand*{\tmarktl}{%
+      \begin{picture}(0,0)
+        \unitlength 1mm
+        \thinlines
+        \put(-2,0){\line(-1,0){18}}
+        \put(0,2){\line(0,1){18}}
+        \put(3,15){\normalfont\ttfamily\fontsize{8bp}{10bp}\selectfont\jobname\ \
+          \today\ \ 
+          \printtime\ \ 
+          Page \thepage}
+      \end{picture}}
+
+    % Remove a marca (trim mark) centra para um layout mais limpo
+    \renewcommand*{\tmarktm}{}
+    \renewcommand*{\tmarkml}{}
+    \renewcommand*{\tmarkmr}{}
+    \renewcommand*{\tmarkbm}{}
+\fi
+
+\checkandfixthelayout                 % Checa se há erros no formato do papel
+
+\usepackage{import}
+
+\sideparmargin{outer}
+
+\newcommand{\numsecao}{\arabic{section}} %para armazenar apenas a numeração da section
+
+%
+\usepackage{array}
+\usepackage{amsmath,amssymb}
+\usepackage[thmmarks,amsmath]{ntheorem}
+\usepackage{thmtools}
+\usepackage{bm}
+
+% Link e url
+
+\usepackage[hyphens]{url}             % Permite hifenização em URL's
+\usepackage{nameref}
+\usepackage[unicode=true,psdextra]{hyperref}
+\usepackage{cleveref}
+\crefname{appsec}{Apêndice}{Apêndices}
+
+\usepackage{listings}                 % Pacote para listar códigos em LaTeX
+
+% Imagens e Cores
+\usepackage{graphicx}                 % Incluir imagens e usar cores
+\usepackage[x11names]{xcolor}                   % Definir mais cores
+\usepackage{eso-pic}                  % Marca d'água e mais
+\usepackage{preambulo/coresdoc}
+\graphicspath{{imagens/}}
+
+\usepackage{type1cm}
+\usepackage{lettrine}
+\usepackage{GoudyIn}
+
+\usepackage{csquotes}       % para quotes
+\usepackage{indentfirst}    %para não identar primeiro parágrafo após seção, capítulo, etc.
+
+% Tabela de conteúdos, Sumário, Table of contents (TOC)
+\setcounter{tocdepth}{1}              % Profundidade da ToC
+\setcounter{secnumdepth}{2}           % Profundidade na numeração de seções
+\setcounter{maxsecnumdepth}{3}        % Profundidade máxima da numeração de seções
+
+% Estilo do capítulo
+%-----------------------------------------------
+%- MyChapterStyles
+%-----------------------------------------------
+\makeatletter
+\makechapterstyle{mychapterstyle}{
+    \chapterstyle{default}
+    \def\format{\normalfont\sffamily}
+
+    \setlength\beforechapskip{0mm}
+
+	\renewcommand*\thechapter{\arabic{chapter}}
+    \renewcommand*{\chapnamefont}{\format\HUGE}
+    \renewcommand*{\chapnumfont}{\format\fontsize{54}{54}\selectfont}
+    \renewcommand*{\chaptitlefont}{\format\fontsize{42}{42}\selectfont}
+
+    \renewcommand*{\printchaptername}{\chapnamefont\MakeUppercase{\@chapapp}}
+    \patchcommand{\printchaptername}{\begingroup\color{dtugray}}{\endgroup}
+    \renewcommand*{\chapternamenum}{\space\space}
+    \patchcommand{\printchapternum}{\begingroup\color{dtured}}{\endgroup}
+    \renewcommand*{\printchapternonum}{%
+        \vphantom{\printchaptername\chapternamenum\chapnumfont 1}
+        \afterchapternum
+    }
+
+    \setlength\midchapskip{1ex}
+
+    \renewcommand*{\printchaptertitle}[1]{\raggedleft \chaptitlefont ##1}
+    \renewcommand*{\afterchaptertitle}{\vskip0.5\onelineskip \hrule \vskip1.3\onelineskip}
+	\renewcommand{\partnamefont}{\Large\scshape\centering\MakeLowercase}
+	\renewcommand{\partnumfont}{\Large\scshape\centering\MakeLowercase}
+	\renewcommand{\midpartskip}{\par\rule{1in}{0.5pt}\par}
+	\renewcommand{\printparttitle}{\HUGE\scshape\centering\MakeLowercase}
+}
+\makeatother
+%\chapterstyle{mychapterstyle}
+
+%---------------------------------------------------------
+%- VZ34
+%---------------------------------------------------------
+
+\usepackage{calc}
+\newif\ifNoChapNumber
+\makeatletter
+\makechapterstyle{VZ34}{
+  \renewcommand\chapternamenum{}
+  \renewcommand\printchaptername{}
+  \renewcommand\printchapternum{}
+  \renewcommand\chapnumfont{\huge\bfseries}
+  \renewcommand\chaptitlefont{\large\bfseries\raggedleft}
+  \renewcommand\printchaptertitle[1]{%
+    \begin{tabular}{@{}p{\textwidth-1cm-2em-4\tabcolsep }|!{\quad}p{1cm}}
+	  \chaptitlefont ##1 & \ifNoChapNumber\relax\else\chapnumfont \thechapter\fi
+    \end{tabular}
+%    \begin{tabular}{@{}p{1cm}|!{\quad}p{\textwidth-1cm-2em-4\tabcolsep }}
+%	  \ifNoChapNumber\relax\else\chapnumfont \thechapter\fi 
+%	  & \chaptitlefont ##1
+%    \end{tabular}
+    \NoChapNumberfalse%
+  }
+  \renewcommand\printchapternonum{\NoChapNumbertrue}
+}
+
+%------------------- JP01 -------------------------
+
+%---------------------------------------------------------
+%- VZ34
+%---------------------------------------------------------
+
+\newif\ifchapternonum
+\makeatletter
+\makechapterstyle{JP01}{
+  \renewcommand\chapternamenum{}
+  \renewcommand\printchaptername{}
+  \renewcommand\printchapternum{}
+  \renewcommand\chapnumfont{\huge\bfseries}
+  \renewcommand\chaptitlefont{\large\bfseries\raggedleft}
+  \renewcommand\printchaptertitle[1]{%
+	\noindent%
+	\ifchapternonum%
+	\begin{tabularx}{\textwidth}{X}%
+		{\parbox[b]{\linewidth}{\chaptitlefont ##1}%
+		\vphantom{\raisebox{15pt}{\chapnumfont 1}}}
+	\end{tabularx}%
+	\else
+	\begin{tabularx}{\textwidth}{Xl}
+		{\parbox[b]{\linewidth}{\chaptitlefont ##1}}
+		& \chapnumfont \thechapter%
+	\end{tabularx}%
+	\fi
+}
+  \renewcommand\printchapternonum{\NoChapNumbertrue}
+}
+
+
+%---------------------------------------------------
+
+%\chapterstyle{VZ34}
+\chapterstyle{JP01}
+
+\let\Part\part
+\renewcommand\part[2][]{{\let\newpage\relax
+\ifx\relax#1\relax\Part{#2}\else\Part[#1]{#2}\fi}}  % Definido partes
+
+% Para textos com mais de uma coluna na página
+\usepackage{multicol}
+
+%Para itens, subitens... listas
+\usepackage{enumitem}
+
+
+% Cabeçalho e notas de rodapé
+\def\hffont{\sffamily\small}
+\makepagestyle{myruled}
+\makeheadrule{myruled}{\textwidth}{\normalrulethickness}
+\makeevenhead{myruled}{\hffont\thepage}{}{\hffont\leftmark}
+\makeoddhead{myruled}{\hffont\rightmark}{}{\hffont\thepage}
+\makeevenfoot{myruled}{}{}{}
+\makeoddfoot{myruled}{}{}{}
+\makepsmarks{myruled}{
+    \nouppercaseheads
+    \createmark{chapter}{both}{shownumber}{}{\space}
+    \createmark{section}{right}{shownumber}{}{\space}
+    \createplainmark{toc}{both}{\contentsname}
+    \createplainmark{lof}{both}{\listfigurename}
+    \createplainmark{lot}{both}{\listtablename}
+    \createplainmark{bib}{both}{\bibname}
+    \createplainmark{index}{both}{\indexname}
+    \createplainmark{glossary}{both}{\glossaryname}
+}
+\pagestyle{myruled}
+\copypagestyle{cleared}{myruled}      % Ao usar \cleardoublepage, utilize myruled ao invés de empty
+\makeevenhead{cleared}{\hffont\thepage}{}{} % Remove leftmark em páginas brancas
+
+\makeevenfoot{plain}{}{}{}            % Sem numeração de página em páginas pares no estilo plain (capítulo inicia)
+\makeoddfoot{plain}{}{}{}             % Sem numeração de página em páginas ímpares no estilo plain (capítulo inicia)
+
+% estilos de fontes para \*section, \*paragraph
+\setsecheadstyle              {\huge\sffamily\raggedright}
+\setsubsecheadstyle           {\LARGE\sffamily\raggedright}
+\setsubsubsecheadstyle        {\Large\sffamily\raggedright}
+%\setparaheadstyle             {\normalsize\sffamily\itseries\raggedright}
+%\setsubparaheadstyle          {\normalsize\sffamily\raggedright}
+
+
+% Hypersetup
+\hypersetup{
+    pdfauthor={\autordoc{}},
+    pdftitle={\titulodoc{}},
+    pdfsubject={\subtitulodoc{}},
+    pdfdisplaydoctitle,
+    bookmarksnumbered=true,
+    bookmarksopen,
+    breaklinks,
+    linktoc=all,
+    plainpages=false,
+    unicode=true,
+    colorlinks=false,
+    citebordercolor=dtured,           % cor para links na bibliografia
+    filebordercolor=dtured,           % cor de links de arquivos
+    linkbordercolor=dtured,           % cor para links internos (mude a cor do quadro com linkbordercolor)
+    urlbordercolor=s13,               % cor para links externos
+    hidelinks,                        % para não mostrar quadros ou links coloridos.
+}
+% Próximas linhas são para fazer link correto ao usar pdfbookmark. O comportamento normal liga-se logo abaixo do título do capítulo. Este hack coloca o link logo acima do capítulo como qualquer outro uso normal do \chapter.
+% Outra solução pode ser encontrada em http://tex.stackexchange.com/questions/59359/certain-hyperlinks-memoirhyperref-placed-too-low
+\makeatletter
+\renewcommand{\@memb@bchap}{%
+  \ifnobibintoc\else
+    \phantomsection
+    \addcontentsline{toc}{chapter}{\bibname}%
+  \fi
+  \chapter*{\bibname}%
+  \bibmark
+  \prebibhook
+}
+\let\oldtableofcontents\tableofcontents
+\newcommand{\newtableofcontents}{
+    \@ifstar{\oldtableofcontents*}{
+        \phantomsection\addcontentsline{toc}{chapter}{\contentsname}\oldtableofcontents*}}
+\let\tableofcontents\newtableofcontents
+\makeatother
+
+% Confidencial
+\newcommand{\confidentialbox}[1]{
+    \put(0,0){\parbox[b][\paperheight]{\paperwidth}{
+        \begin{vplace}
+            \centering
+            \scalebox{1.3}{
+                \begin{tikzpicture}
+                    \node[very thick,draw=red!#1,color=red!#1,
+                          rounded corners=2pt,inner sep=8pt,rotate=-20]
+                          {\sffamily \HUGE \MakeUppercase{Confidential}};
+                \end{tikzpicture}
+            }
+        \end{vplace}
+    }}
+}
+
+% Prefrontmatter
+\newcommand{\prefrontmatter}{
+    \pagenumbering{alph}
+    \ifnum\strcmp{\confidential}{true}=0
+        \AddToShipoutPictureBG{\confidentialbox{10}}   % uma caixa de confidencial em 10% ao fundo de cada página
+        \AddToShipoutPictureFG*{\confidentialbox{100}} % uma caixa de confidencial em 100% ao fundo na primeira página
+    \fi
+}
+
+\newcommand{\frieze}{%
+    \AddToShipoutPicture*{
+        \put(0,0){
+            \parbox[b][\paperheight]{\paperwidth}{%
+                \includegraphics[trim=130mm 0 0 0,width=0.9\textwidth]{frise-02}
+                \vspace*{2.5cm}
+            }
+        }
+    }
+}
+
+%\setlength{\parindent}{2em}
+
+\setsecheadstyle{\sethangfrom{\noindent ##1}\Large\centering}  %Definir estilo e centralizar seções.
+
+\usepackage{draftwatermark}
+
+\SetWatermarkText{www.jeanpimenta.com \\[8pt] CC BY-SA 4.0}
+\DraftwatermarkOptions{
+    color={[gray]0.85},
+    angle=45,
+    hpos=0.5\paperwidth,vpos=0.5\paperheight,
+    scale=0.4
+}
+
+
+\usepackage{tabularx}
+\usepackage{changepage} %Para ajustar textos, tabelas, etc com relação às margens de texto
+
+%Para criação de um glossário
+\usepackage{makeidx} 
+\makeindex 

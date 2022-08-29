@@ -1,0 +1,44 @@
+% Fontes para textos (http://www.macfreek.nl/memory/Fonts_in_LaTeX)
+% Utilize XeLaTeX
+\usepackage{fontspec}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%  1
+\usepackage{xunicode}
+\defaultfontfeatures{Ligatures=TeX}
+\setmainfont[Mapping=tex-text,Numbers=OldStyle]{Junicode}
+%\setmainfont[Ligatures={TeX,Rare}]{Hoefler Text}
+%\usepackage{xspace}
+%%%%%%%%%%%%%%%%%%%%%  1
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newfontfamily\junicode[Mapping=tex-text,Numbers=OldStyle]{Junicode}
+\newcommand\que{\junicode\char"E8BF\xspace\normalfont}
+\newcommand\nb{\"{\junicode\char"0273}\xspace\normalfont}
+\newcommand\ee{\junicode\char"0119\normalfont}
+\newcommand\ct{\junicode\char"EEC5\normalfont}
+\newcommand\utraco{\junicode\char"016B\normalfont}
+\newcommand\rdois{\junicode\char"A776\normalfont}
+\newcommand\ft{\junicode\char"E8DF\normalfont}
+\newcommand\ff{\junicode\char"EBA6\normalfont}
+\newcommand\jfi{\junicode\char"EBA2\normalfont}
+\newcommand\aeft{\ae\ft}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%  2
+%\defaultfontfeatures{Ligatures={TeX}}
+%\setmainfont{TeXGyrePagella}
+%\fontspec[Ligatures={Rare}]{Hoefler Text}
+%\setmainfont[Mapping=tex-text,Ligatures={Common, Rare}]{Hoefler Text}
+%[Mapping=tex-text]
+%Com TexGyrePagella e Hoefler Text
+%%%%% Com TexGyrePagella e Hoefler Text
+%Abaixo deve ser a abreviação de -que, uma espécie de q-sz
+%\newcommand{\que}{\rareliga{}fs{}\normalfont}
+
+% Linguagem
+\usepackage{polyglossia}    % tipografia multilinguística e hifenizações apropriadas
+\setmainlanguage{brazil}
+\setotherlanguage[variant=classic,babelshorthands]{latin}
+
+%Para utilização de sinais gráficos sob ou sobre a letra
+%\usepackage{wsuipa}
+\usepackage{ipa}

@@ -1,0 +1,27 @@
+%!TEX root = ../arquivo.tex 
+\thispagestyle{empty}             % Sem numeração da página
+\calccentering{\unitlength}
+\begin{adjustwidth*}{\unitlength}{-\unitlength}
+    \begin{adjustwidth}{-0.5cm}{-0.5cm}
+        \sffamily
+        \begin{flushright}
+%            \assuntodoc{}~\tipodoc{} \\*[0cm]
+%			\assuntodoc{} \\*[0cm]
+            \tipodoc{}\\
+        \end{flushright}
+        \vspace*{\fill}
+        \noindent
+%        \includegraphics[width=0.75\textwidth]{elemento-A.png}\\*[0.5cm]
+        \HUGE \titulodoc{}\\*[0.2cm]
+        \Huge \subtitulodoc{}\\*[1.2cm]
+        \parbox[b]{0.5\linewidth}{%
+            \LARGE 
+            \autordoc{}\\*[1.2cm]
+%            \Large
+%            \localdoc{} - \MES~de \the\year
+        }
+%        \hfill\includegraphics[scale=0.7]{jp-logo-CMYK}
+    \end{adjustwidth}
+\end{adjustwidth*}
+\normalfont
+\normalsize

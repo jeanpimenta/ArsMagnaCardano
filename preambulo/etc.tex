@@ -1,0 +1,40 @@
+% Especificação de pacotes.
+
+\usepackage{blindtext}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+%\usepackage{pgfplots}                 % Ferramentas para plot
+%\usetikzlibrary{
+%    arrows,
+%    matrix,
+%    positioning,
+%    shapes,
+%    topaths,
+%}
+%\pgfplotsset{compat=1.7}
+
+% Listings
+\lstset{
+    basicstyle=\footnotesize\ttfamily,% tamanho da letra utilizado na inserção de códigos
+    breakatwhitespace=false,          % define se as quebras automáticas só devem acontecer com espaço em branco
+    breaklines=true,                  % define quebra de linha automática
+    captionpos=b,                     % define a posição de legenda para baixo
+    commentstyle=\color{s14a},        % estilo de comentários
+    deletekeywords={},                % caso queira excluir palavras-chave de um idioma
+    escapeinside={\%*}{*)},           % caso queira addicionar LaTeX em seu código
+    frame=single,                     % adiciona um quadro ao redor do código
+    keywordstyle=\bfseries\ttfamily\color{s09}, % estilo da keyword
+    language=Python,                  % linguagem do código
+    morekeywords={*,...},             % caso queira adicionar mais keyword para o set
+    numbers=left,                     % onde colocar a numeração das linhas; opções possíveis (none, left, right)
+    numbersep=5pt,                    % distância entre numeração das linhas e o código
+    numberstyle=\sffamily\tiny\color{dtugray}, % estilo usado para numeração das linhas
+    rulecolor=\color{dtugray},        % caso não definido, a cor do quadro pode ser alterada em quebras de linhas
+    showspaces=false,                 % mostra espaços em todos os lugares adicionando sublinhados; substitui os 'showstringspaces'
+    showstringspaces=false,           % sublinhar espaços apenas dentro de strings
+    showtabs=false,                   % mostra tabs dentro de strings adicionando sublinhados
+    stepnumber=1,                     % passo entre numeração de linhas. Se for 1, cada linha será numerada
+    stringstyle=\color{s07},          % estilo literal da string
+    tabsize=2,                        % define o padrão de tabulação para 2 espaços
+    title=\lstname,                   % mostra o nome do arquivo dos arquivos incluídos com \lstinputlisting
+}

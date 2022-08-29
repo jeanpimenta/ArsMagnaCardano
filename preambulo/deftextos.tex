@@ -1,0 +1,38 @@
+% Informações a serem utilizadas na titlepage, colophon, prefácio e hyperref setup (metainfo do pdf), além de outras opções.
+
+\def\assuntodoc{}
+\def\tipodoc{Transcrição}
+\def\arquivodocA{Ars Magna - Cardano}
+%\def\thesistype{Mestrado em YYYY}
+%\def\thesistypeabbr{Ph.D.}
+%\def\thesistype    {Doutorado em YYYY}
+
+\def\autordoc{Gerolamo Cardano}
+\def\titulodoc{Ars Magna}
+\def\subtitulodoc{Tradutor: Jean Júnio Mendes Pimenta}
+\def\localdoc{}
+
+\def\papersize    {a4paper} % Tamanho do papel (b5paper/a4paper)
+\def\showtrims    {false} % Imprimir em papel maior que em \papersize e mostrar marcas de corte (show trim)(true/false)?
+
+%\def\showtodos    {false}  % Mostrar a fazer [todos] (true/false)?
+\def\confidential {false} % Confidencial (true/false)?
+
+% Definição dos meses em português
+\newcommand{\MES}{%
+  \ifcase\the\month
+  \or Janeiro% 1
+  \or Fevereiro% 2
+  \or Março% 3
+  \or Abril% 4
+  \or Maio% 5
+  \or Junho% 6
+  \or Julho% 7
+  \or Agosto% 8
+  \or Setembro% 9
+  \or Outubro% 10
+  \or Novembro% 11
+  \or Dezembro% 12
+  \fi}
+  
+%\def\rdois{\Rdois\footnote{r com corte na perna}}

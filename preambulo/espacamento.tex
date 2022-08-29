@@ -1,0 +1,25 @@
+\def\spUMspace{0.1em}
+\def\spDOISspace{0.2em}
+
+\def\spUMloop<#1#2>{%
+    \ifx\relax#1%
+    \else%
+        #1\hspace{\spUMspace}\spUMloop<#2>%
+    \fi%
+}
+
+\def\spUM#1{%
+    \spUMloop<#1\relax>}
+%\obeyspaces
+%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%
+\def\spDOISloop<#1#2>{%
+    \ifx\relax#1%
+    \else%
+        #1\hspace{\spDOISspace}\spDOISloop<#2>%
+    \fi%
+}
+
+\def\spDOIS#1{%
+    \spDOISloop<#1\relax>}
+%\obeyspaces
